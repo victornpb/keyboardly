@@ -115,7 +115,7 @@ export class PanelManager {
 /// --- shortcut handling
 
 
-export default class Shortcuts {
+export class Shortcuts {
 
   KEYBIDING_ATTR = 'data-shortcut';
 

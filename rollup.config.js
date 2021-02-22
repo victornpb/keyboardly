@@ -1,39 +1,140 @@
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import babel from '@rollup/plugin-babel';
+import babel from 'rollup-plugin-babel';
+import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
+import { terser } from 'rollup-plugin-terser';
+import banner from 'rollup-plugin-banner2'
+import S from "tiny-dedent";
+import packageJson from './package.json';
 
-import pkg from './package.json';
+const license = () => S(`
+  /*!
+   * ${packageJson.nameFull} v${packageJson.version} (${packageJson.homepage})
+   * Copyright (c) ${packageJson.author}
+   * @license ${packageJson.license}
+   */
+   `
+);
+
+const production = !process.env.ROLLUP_WATCH;
+const sourcemap = production ? true : 'inline';
 
 export default [
-	// browser-friendly UMD build
-	{
-		input: 'src/main.js',
-		output: {
-			name: 'keyboardly',
-			file: pkg.browser,
-			format: 'umd'
-		},
-		plugins: [
-			resolve(), // so Rollup can find `ms`
-			commonjs(), // so Rollup can convert `ms` to an ES module
-			babel({
-				exclude: 'node_modules/**',
-			}),
-		]
-	},
 
-	// CommonJS (for Node) and ES module (for bundlers) build.
-	// (We could have three entries in the configuration array
-	// instead of two, but it's quicker to generate multiple
-	// builds from a single configuration where possible, using
-	// an array for the `output` option, where we can specify
-	// `file` and `format` for each target)
-	{
-		input: 'src/main.js',
-		external: ['ms'],
-		output: [
-			{ file: pkg.main, format: 'cjs' },
-			{ file: pkg.module, format: 'es' }
-		]
-	}
+  // Modern Module (No babel preset)
+  {
+    input: './src/index.js',
+    output: [
+      {
+        file: packageJson.module.replace('.js', '.mjs'),
+        format: 'esm',
+        sourcemap: false,
+      },
+    ],
+    plugins: [
+      resolve(),
+      commonjs(),
+      babel({
+        plugins: [
+          '@babel/plugin-proposal-class-properties',
+          '@babel/plugin-proposal-private-methods'
+        ]
+      }),
+      banner(license)
+    ]
+  },
+
+  // CJS and ESM (preset-env)
+  {
+    input: './src/index.js',
+    output: [
+      {
+        file: packageJson.main,
+        format: 'cjs',
+        sourcemap
+      },
+      {
+        file: packageJson.module,
+        format: 'esm',
+        sourcemap
+      },
+    ],
+    plugins: [
+      resolve(),
+      babel({
+        exclude: 'node_modules/**',
+        presets: [
+          [
+            '@babel/env',
+            {
+              modules: 'auto',
+              targets: {
+                browsers: '> 1%, IE 11, not op_mini all, not dead',
+                node: 8
+              },
+              useBuiltIns: 'usage',
+              corejs: 3,
+            }
+          ]
+        ],
+        plugins: [
+          '@babel/plugin-proposal-class-properties',
+          '@babel/plugin-proposal-private-methods'
+        ]
+      }),
+      commonjs(),
+      // production &&
+      // terser({
+      //   output: {
+      //     // compress: false,
+      //     // mangle: false,
+
+      //   }
+      // }),
+      banner(license)
+    ]
+  },
+
+  // Legacy UMD (preset-env)
+  {
+    input: './src/index.js',
+    output: [
+      {
+        name: packageJson.globalVar,
+        file: packageJson.unpkg,
+        format: 'umd',
+        sourcemap
+      }
+    ],
+    plugins: [
+      resolve(),
+      babel({
+        exclude: 'node_modules/**',
+        presets: [
+          [
+            '@babel/env',
+            {
+              modules: 'auto',
+              targets: {
+                browsers: '> 1%, IE 11, not op_mini all, not dead',
+                node: 8
+              },
+              useBuiltIns: 'usage',
+              corejs: 3,
+            }
+          ]
+        ],
+        plugins: [
+          '@babel/plugin-proposal-class-properties',
+          '@babel/plugin-proposal-private-methods'
+        ]
+      }),
+      commonjs(),
+      production &&
+      terser({
+        output: {}
+      }),
+      banner(license)
+    ]
+  }
+
 ];

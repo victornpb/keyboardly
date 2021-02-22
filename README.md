@@ -1,46 +1,28 @@
-# rollup-starter-lib
+# keyboardly
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/rollup/rollup-starter-lib.svg)](https://greenkeeper.io/)
+![Node](https://img.shields.io/node/v/keyboardly.svg?style=flat-square)
+[![NPM](https://img.shields.io/npm/v/keyboardly.svg?style=flat-square)](https://www.npmjs.com/package/keyboardly)
+[![Travis](https://img.shields.io/travis/victornpb/keyboardly/master.svg?style=flat-square)](https://travis-ci.org/victornpb/keyboardly)
+[![David](https://img.shields.io/david/victornpb/keyboardly.svg?style=flat-square)](https://david-dm.org/victornpb/keyboardly)
+[![Coverage Status](https://img.shields.io/coveralls/victornpb/keyboardly.svg?style=flat-square)](https://coveralls.io/github/victornpb/keyboardly)
+[![NPM](https://img.shields.io/npm/dt/keyboardly.svg?style=flat-square)](https://www.npmjs.com/package/keyboardly)
 
-This repo contains a bare-bones example of how to create a library using Rollup, including importing a module from `node_modules` and converting it from CommonJS.
+A super lightweight fps meter, with near zero overhead
 
-We're creating a library called `how-long-till-lunch`, which usefully tells us how long we have to wait until lunch, using the [ms](https://github.com/zeit/ms) package:
+## Installation
 
-```js
-console.log('it will be lunchtime in ' + howLongTillLunch());
-```
+[Yarn](https://github.com/yarnpkg/yarn)
 
-## Getting started
+    yarn add keyboardly
 
-Clone this repository and install its dependencies:
+NPM
 
-```bash
-git clone https://github.com/rollup/rollup-starter-lib
-cd rollup-starter-lib
-npm install
-```
+    npm install keyboardly
 
-`npm run build` builds the library to `dist`, generating three files:
+If you don't use a package manager, you can [access `keyboardly` via unpkg (CDN)](https://unpkg.com/keyboardly/), download the source, or point your package manager to the url.
 
-* `dist/how-long-till-lunch.cjs.js`
-    A CommonJS bundle, suitable for use in Node.js, that `require`s the external dependency. This corresponds to the `"main"` field in package.json
-* `dist/how-long-till-lunch.esm.js`
-    an ES module bundle, suitable for use in other people's libraries and applications, that `import`s the external dependency. This corresponds to the `"module"` field in package.json
-* `dist/how-long-till-lunch.umd.js`
-    a UMD build, suitable for use in any environment (including the browser, as a `<script>` tag), that includes the external dependency. This corresponds to the `"browser"` field in package.json
+## Usage
 
-`npm run dev` builds the library, then keeps rebuilding it whenever the source files change using [rollup-watch](https://github.com/rollup/rollup-watch).
+## Contributing
 
-`npm test` builds the library, then tests it.
-
-## Variations
-
-* [babel](https://github.com/rollup/rollup-starter-lib/tree/babel) — illustrates writing the source code in ES2015 and transpiling it for older environments with [Babel](https://babeljs.io/)
-* [buble](https://github.com/rollup/rollup-starter-lib/tree/buble) — similar, but using [Bublé](https://buble.surge.sh/) which is a faster alternative with less configuration
-* [TypeScript](https://github.com/rollup/rollup-starter-lib/tree/typescript) — uses [TypeScript](https://www.typescriptlang.org/) for type-safe code and transpiling
-
-
-
-## License
-
-[MIT](LICENSE).
+We are open to contributions, see [CONTRIBUTING.md](CONTRIBUTING.md) for more info.
