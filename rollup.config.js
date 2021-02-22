@@ -2,8 +2,8 @@ import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
-import banner from 'rollup-plugin-banner2'
-import S from "tiny-dedent";
+import banner from 'rollup-plugin-banner2';
+import S from 'tiny-dedent';
 import packageJson from './package.json';
 
 const license = () => S(`
