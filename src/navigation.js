@@ -189,7 +189,9 @@ function focus(elm) {
 
 function DEBUG_TARGET(item) {
     if (DEBUG) item.element.style.backgroundColor = '#ff0';
+    setTimeout(() => item.element.style.backgroundColor = '', 1000);
 }
 function DEBUG_ITEM(item) {
     if (DEBUG) item.element.style.backgroundColor = '#333';
+    setTimeout(() => item.element.style.backgroundColor = '', 1000);
 }
