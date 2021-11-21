@@ -26,9 +26,10 @@ export class PanelManager {
     this.init();
   }
   init() {
-    document.addEventListener("click", this.#focusPanelOnClickHandler); // TODO: add to destroy
-    document.addEventListener("keyup", this.#tabFocusFollowerHandler); // TODO: add to destroy
-    document.addEventListener("keyup", this.#navigationHandler); // TODO: add to init
+  destroy() {
+    document.removeEventListener('click', this.#focusPanelOnClickHandler);
+    document.removeEventListener('keyup', this.#tabFocusFollowerHandler);
+    document.removeEventListener('keydown', this.#navigationHandler);
   }
 
   /** Focus a element when clicked */
