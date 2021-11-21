@@ -20,7 +20,9 @@ export default function shortcutDelegator(
       .filter((elm) => testElement(elm, event, keybindingAttr));
 
     if (matchedElements.length) {
+      if (DEBUG) console.log("triggering shortcuts", matchedElements);
       if (isFocusedOnInput && matchedElements.every((elm) => !elm.hasAttribute(ATTR_PREVENT))) {
+        if (DEBUG) console.log("shortcut prevented!");
         return; // ignore event unless a hotkey is set to prevent, in that case prevent the original
       }
 
@@ -30,6 +32,7 @@ export default function shortcutDelegator(
       // trigger clicks
       matchedElements.forEach((element) => {
         if (typeof dispatcherFn === "function") {
+          if (DEBUG) console.log("dispatching shortcut...", container, element, event);
           dispatcherFn({
             container,
             element,
@@ -38,7 +41,6 @@ export default function shortcutDelegator(
         }
       });
 
-      if (DEBUG) console.log("triggering shortcuts", matchedElements);
     }
   }
 }
