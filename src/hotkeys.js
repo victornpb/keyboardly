@@ -1,12 +1,11 @@
-// import { testElement } from './keybindings';
+import { DEBUG } from './DEBUG';
 import delegator from './delegator';
-
 
 /**
  * A hot key is a key combination that the user can press to perform an action quickly.
  * Global to the application, examples: save, undo, bring a menu on a game etc...
  */
-export default class Hotkeys {
+export class Hotkeys {
   #handler = null;
   KEYBIDING_ATTR = 'data-hotkey';
   constructor() {
@@ -25,7 +24,7 @@ export default class Hotkeys {
   }
 
   _hotkeysDelegatorHandler(event) {
-    //console.log("hotkeysDelegatorHandler", event);
+    if (DEBUG) console.log("hotkeysDelegatorHandler", event);
     delegator(document, event, this.KEYBIDING_ATTR);
   }
 }
@@ -33,18 +32,18 @@ export default class Hotkeys {
 
 window.hotkeys = new Hotkeys();
 
-// function announceHotkeys() {
-//   const elms = Array.from(document.querySelectorAll(`[${KEYBIDING_ATTR}]`)).filter(
-//     (elm) => !elm.disabled
-//   );
+export function announceHotkeys() {
+  const elms = Array.from(document.querySelectorAll(`[${KEYBIDING_ATTR}]`)).filter(
+    (elm) => !elm.disabled
+  );
 
-//   const hotkeys = elms.map((elm) => ({
-//     keyBinding: elm.getAttribute(KEYBIDING_ATTR),
-//     text: elm.innerText,
-//     title: elm.title,
-//     elm: elm,
-//   }));
+  const hotkeys = elms.map((elm) => ({
+    keyBinding: elm.getAttribute(KEYBIDING_ATTR),
+    text: elm.innerText,
+    title: elm.title,
+    elm: elm,
+  }));
 
-//   return hotkeys;
-// }
-// window.announceHotkeys = announceHotkeys;
+  return hotkeys;
+}
+window.announceHotkeys = announceHotkeys;
