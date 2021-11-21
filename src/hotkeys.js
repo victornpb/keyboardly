@@ -30,8 +30,6 @@ export class Hotkeys {
 }
 
 
-window.hotkeys = new Hotkeys();
-
 export function announceHotkeys() {
   const elms = Array.from(document.querySelectorAll(`[${KEYBIDING_ATTR}]`)).filter(
     (elm) => !elm.disabled
@@ -46,4 +44,4 @@ export function announceHotkeys() {
 
   return hotkeys;
 }
-window.announceHotkeys = announceHotkeys;
+

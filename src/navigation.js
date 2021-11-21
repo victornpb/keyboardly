@@ -192,8 +192,6 @@ function focus(elm) {
     curr.style.backgroundColor = '#0ff';
 }
 
-const DEBUG = true;
-
 function DEBUG_TARGET(item) {
     if (DEBUG) item.element.style.backgroundColor = '#ff0';
 }

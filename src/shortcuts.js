@@ -21,7 +21,7 @@ export class ComponentFocusManager {
     this.#focusPanelOnClickHandler = this._focusPanelOnClickHandler.bind(this);
     this.#tabFocusFollowerHandler = this._tabFocusFollowerHandler.bind(this);
     this.#navigationHandler = this._navigationHandler.bind(this);
-    this.init();
+    // this.init();
   }
   init() {
     document.addEventListener("click", this.#focusPanelOnClickHandler);
@@ -95,10 +95,15 @@ export class ComponentFocusManager {
 
     let components = Array.from(document.querySelectorAll(this.COMPONENT_SELECTOR));
     components = components.filter(isEnabled);
-    const currentPanel = this.getActiveComponent();
 
     let nextPanel;
-    nextPanel = findNextItem(components, currentPanel, event);
+    const currentPanel = this.getActiveComponent();
+
+    if (currentPanel) {
+      nextPanel = findNextItem(components, currentPanel, event);
+    } else {
+      nextPanel = components[0];
+    }
 
     if (nextPanel && nextPanel !== currentPanel) {
       event.preventDefault();
@@ -106,7 +111,6 @@ export class ComponentFocusManager {
       this.setCurrentComponent(nextPanel);
       // nextPanel.scrollIntoView();
     }
-
 
     // _domNavigation() {
     //   let panels = Array.from(document.querySelectorAll(this.COMPONENT_SELECTOR));
@@ -137,32 +141,37 @@ export class ComponentFocusManager {
 
 
 export class Shortcuts {
-
   KEYBIDING_ATTR = 'data-shortcut';
+  mngr = null;
 
+  #isInit = false;
   #shortcutDelegatorHandler = null;
   constructor() {
+    this.#shortcutDelegatorHandler = this._shortcutDelegatorHandler.bind(this);
+    this.mngr = new ComponentFocusManager();
     this.init();
   }
 
   init() {
-    if (this.#shortcutDelegatorHandler) throw new Error("Already initialized!");
-    this.#shortcutDelegatorHandler = this._shortcutDelegatorHandler.bind(this);
-    document.addEventListener('keydown', this.#shortcutDelegatorHandler);
-    // TODO: allow keyup/keydown
+    if (!this.#isInit) {
+      this.mngr.init();
+
+      // TODO: add support for holding keys keyup/keydown
+      document.addEventListener('keydown', this.#shortcutDelegatorHandler);
+
+      this.#isInit = true;
+    } else throw new Error("Already initialized!");
   }
 
   destroy() {
+    this.mngr.destroy();
     document.removeEventListener('keydown', this.#shortcutDelegatorHandler);
-    this.#shortcutDelegatorHandler = null;
+    this.#isInit = false;
   }
 
   _shortcutDelegatorHandler(event) {
     if (DEBUG) console.log("_shortcutDelegatorHandler", event);
-    const currentPanel = panelMan.getActiveComponent();
+    const currentPanel = this.mngr.getActiveComponent();
     delegator(currentPanel, event, this.KEYBIDING_ATTR);
   }
 }
-
-const shortcuts = new Shortcuts();
-const panelMan = new ComponentFocusManager();
