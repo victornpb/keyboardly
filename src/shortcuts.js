@@ -107,6 +107,28 @@ export class ComponentFocusManager {
       // nextPanel.scrollIntoView();
     }
 
+
+    // _domNavigation() {
+    //   let panels = Array.from(document.querySelectorAll(this.COMPONENT_SELECTOR));
+    //   panels = panels.filter(el=>!el.hasAttribute('disabled'))
+
+    //   const currentPanel = this.getCurrentPanel();
+
+    //   let i = panels.indexOf(currentPanel);
+    //   if (event.key === 'ArrowUp') {
+    //     i--;
+    //   }
+    //   if (event.key === 'ArrowDown') {
+    //     i++;
+    //   }
+
+    //   if (panels[i] && panels[i] !== currentPanel) {
+    //     event.preventDefault();
+    //     event.stopPropagation();
+    //     this.setCurrentComponent(nextPanel);
+    //     // nextPanel.scrollIntoView();
+    //   }
+    // }
   }
 
 }
