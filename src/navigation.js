@@ -4,29 +4,31 @@ export function findNextItem(elements, current, e) {
     const rects = elements.map(getRect);
     const focused = getRect(current);
 
+    const dryRun = e.shiftKey;
+
     let next;
     if (e.key === 'ArrowUp') {
-        next = findAbove(focused, rects);
+        next = findAbove(focused, rects, dryRun);
     }
     else if (e.key === 'ArrowDown') {
-        next = findBelow(focused, rects);
+        next = findBelow(focused, rects, dryRun);
     }
     else if (e.key === 'ArrowLeft') {
-        next = findLeft(focused, rects);
+        next = findLeft(focused, rects, dryRun);
     }
     else if (e.key === 'ArrowRight') {
-        next = findRight(focused, rects);
+        next = findRight(focused, rects, dryRun);
     }
 
 
-    if (e.shiftKey) { //debug
-        focus(current);
+    if (dryRun) { //debug
+        //DEBUG_TARGET(current);
         return;
     }
 
     if (next) {
         e.preventDefault();
-        focus(next.element);
+        if (dryRun) DEBUG_TARGET(next);
         return next.element;
     }
     return null;
@@ -91,18 +93,17 @@ function findAngle(fromItem, toItem) {
     return (deg % 360) + (deg < 0 ? 360 : 0); // normalize angles to 0-360
 }
 
-function findBelow(fromItem, rects) {
+function findBelow(fromItem, rects, dryRun) {
     let dest;
     for (const item of rects) {
+        if (dryRun) DEBUG_TARGET(item, 0);
         if (item.element === fromItem.element) continue;
         const angle = findAngle(fromItem, item);
         // item.element.innerHTML = `${angle}º`;
-        DEBUG_ITEM(item);
 
         if (direction(angle) === 'down') {
-            DEBUG_TARGET(item);
             if (!dest) dest = item;
-            // item.element.innerHTML = `${angle}º ${distance(fromItem, item)}`; 
+            if (dryRun) DEBUG_TARGET(item, 1);
             if (distance(fromItem, item) < distance(fromItem, dest)) {
                 dest = item;
             }
@@ -113,17 +114,17 @@ function findBelow(fromItem, rects) {
 }
 
 
-function findAbove(fromItem, rects) {
+function findAbove(fromItem, rects, dryRun) {
     let dest;
     for (const item of rects) {
+        if (dryRun) DEBUG_TARGET(item, 0);
         if (item.element === fromItem.element) continue;
         const angle = findAngle(fromItem, item);
         // item.element.innerHTML = `${angle}º`;
-        DEBUG_ITEM(item);
 
         if (direction(angle) === 'up') {
-            DEBUG_TARGET(item);
             if (!dest) dest = item;
+            if (dryRun) DEBUG_TARGET(item, 1);
             if (distance(fromItem, item) < distance(fromItem, dest)) {
                 dest = item;
             }
@@ -133,17 +134,17 @@ function findAbove(fromItem, rects) {
     return dest;
 }
 
-function findRight(fromItem, rects) {
+function findRight(fromItem, rects, dryRun) {
     let dest;
     for (const item of rects) {
+        if (dryRun) DEBUG_TARGET(item, 0);
         if (item.element === fromItem.element) continue;
         const angle = findAngle(fromItem, item);
         // item.element.innerHTML = `${angle}º`;
-        DEBUG_ITEM(item);
 
         if (direction(angle) === 'right') {
-            DEBUG_TARGET(item);
             if (!dest) dest = item;
+            if (dryRun) DEBUG_TARGET(item, 1);
             if (distance(fromItem, item) < distance(fromItem, dest)) {
                 dest = item;
             }
@@ -153,17 +154,17 @@ function findRight(fromItem, rects) {
     return dest;
 }
 
-function findLeft(fromItem, rects) {
+function findLeft(fromItem, rects, dryRun) {
     let dest;
     for (const item of rects) {
+        if (dryRun) DEBUG_TARGET(item, 0);
         if (item.element === fromItem.element) continue;
         const angle = findAngle(fromItem, item);
         // item.element.innerHTML = `${angle}º`;
-        DEBUG_ITEM(item);
 
         if (direction(angle) === 'left') {
-            DEBUG_TARGET(item);
             if (!dest) dest = item;
+            if (dryRun) DEBUG_TARGET(item, 1);
             if (distance(fromItem, item) < distance(fromItem, dest)) {
                 dest = item;
             }
@@ -176,22 +177,7 @@ function findLeft(fromItem, rects) {
 
 ////
 
-let curr;
-function focus(elm) {
-    if (curr) {
-        curr.style.outline = '';
-        curr.style.backgroundColor = '';
-    }
-    curr = elm;
-
-    if (DEBUG) curr.style.backgroundColor = '#0ff';
-}
-
-function DEBUG_TARGET(item) {
-    if (DEBUG) item.element.style.backgroundColor = '#ff0';
-    setTimeout(() => item.element.style.backgroundColor = '', 1000);
-}
-function DEBUG_ITEM(item) {
-    if (DEBUG) item.element.style.backgroundColor = '#333';
-    setTimeout(() => item.element.style.backgroundColor = '', 1000);
+function DEBUG_TARGET(item, x) {
+    if (DEBUG) item.element.style.backgroundColor = x ? '#FF0' : '#333';
+    setTimeout(() => item.element.style.backgroundColor = '', 1000 * 3);
 }
