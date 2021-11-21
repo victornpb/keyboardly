@@ -1,3 +1,38 @@
+import { DEBUG } from './DEBUG';
+
+export function findNextItem(elements, current, e) {
+    const rects = elements.map(getRect);
+    const focused = getRect(current);
+
+    let next;
+    if (e.key === 'ArrowUp') {
+        next = findAbove(focused, rects);
+    }
+    else if (e.key === 'ArrowDown') {
+        next = findBelow(focused, rects);
+    }
+    else if (e.key === 'ArrowLeft') {
+        next = findLeft(focused, rects);
+    }
+    else if (e.key === 'ArrowRight') {
+        next = findRight(focused, rects);
+    }
+
+
+    if (e.shiftKey) { //debug
+        focus(current);
+        return;
+    }
+
+    if (next) {
+        e.preventDefault();
+        focus(next.element);
+        return next.element;
+    }
+    return null;
+}
+
+
 
 function getRect(element) {
     const r = element.getBoundingClientRect();
@@ -16,150 +51,152 @@ function getRect(element) {
     return rect;
 }
 
+// function inViewport(el) {
+//     let rect = el.getBoundingClientRect();
+//     return (
+//         rect.top >= 0 &&
+//         rect.left >= 0 &&
+//         rect.bottom <= window.innerHeight &&
+//         rect.right <= window.innerWidth
+//     );
+// }
 
-function reverse(axis) {
-    if(axis==='x') return 'y';
-    if(axis==='y') return 'x';
-    if(axis==='top') return 'bottom';
-    if(axis==='left') return 'right';
-    if(axis==='bottom') return 'top';
-    if(axis==='right') return 'left';
+
+/**
+ * return direction of angle
+ * @param {number} angle Degrees in range 0-360
+ *   45  up   135
+ *     \    /
+ * left  \/  right
+ *       /\
+ *     /    \
+ *  315 down 225
+ */
+function direction(angle) {
+    if (angle >= 45 && angle < 135) return 'up';
+    if (angle >= 135 && angle < 225) return 'right';
+    if (angle >= 225 && angle < 315) return 'down';
+    if (angle >= 315 || angle < 45) return 'left';
+}
+function distance(fromItem, toItem) {
+    const dx = toItem.x - fromItem.x;
+    const dy = toItem.y - fromItem.y;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+function findAngle(fromItem, toItem) {
+    const dx = fromItem.x - toItem.x;
+    const dy = fromItem.y - toItem.y;
+    const angle = Math.atan2(dy, dx);
+    const deg = angle * 180 / Math.PI;  // radians to degrees
+    return (deg % 360) + (deg < 0 ? 360 : 0); // normalize angles to 0-360
 }
 
-function perpendicular(axis) {
-    if (axis === 'x') return 'y';
-    if (axis === 'y') return 'x';
-    if (axis === 'top') return 'right';
-    if (axis === 'left') return 'top';
-    if (axis === 'bottom') return 'left';
-    if (axis === 'right') return 'bottom';
-}
+function findBelow(fromItem, rects) {
+    let dest;
+    for (const item of rects) {
+        if (item.element === fromItem.element) continue;
+        const angle = findAngle(fromItem, item);
+        // item.element.innerHTML = `${angle}º`;
+        DEBUG_ITEM(item);
 
-
-function findNextElm(fromItem, rects, direction) {
-
-    function distance(aX, aY, bX, bY, fast=false) {
-        return Math.sqrt(Math.pow((aX - bX), 2) + Math.pow((aY - bY), 2));
-    }
-    function fastDistance(aX, aY, bX, bY) {
-        return ((aX - bX) ** 2) + ((aY - bY) ** 2);
-    }
-
-    function findNext(fromItem, rects, dir, aligned) {
-        const axis = dir ==='right' || dir==='left' ? 'x' : 'y';
-        const opAxis = perpendicular(axis);
-        const vector = dir === 'top' || dir === 'left' ? true : false;
-        const straightThreshold = 1;
-        
-        let dest;
-        for (const item of rects) {
-            if (
-                item !== fromItem &&
-                (vector ? (item[axis] < fromItem[axis]) : (item[axis] > fromItem[axis]))
-                && (aligned ? Math.abs(fromItem[opAxis] - item[opAxis]) <= straightThreshold : true) // roughtly aligned
-            ) {
-                if (!dest) dest = item;
-                else if (
-                    fastDistance(fromItem[axis], fromItem[opAxis], item[reverse(dir)], item[opAxis]) < fastDistance(fromItem[axis], fromItem[opAxis], dest[reverse(dir)], dest[opAxis])
-                    // fastDistance(fromItem[axis], fromItem[opAxis], item[axis], item[opAxis]) < fastDistance(fromItem[axis], fromItem[opAxis], dest[axis], dest[opAxis])
-                    // Math.abs(fromItem[axis] - item[axis]) < Math.abs(fromItem[axis] - dest[axis]) && // nearest 
-                    // Math.abs(fromItem[opAxis] - item[opAxis]) < Math.abs(fromItem[opAxis] - dest[opAxis]) // closest opposite axis
-                ) dest = item; // is nearest
+        if (direction(angle) === 'down') {
+            DEBUG_TARGET(item);
+            if (!dest) dest = item;
+            // item.element.innerHTML = `${angle}º ${distance(fromItem, item)}`; 
+            if (distance(fromItem, item) < distance(fromItem, dest)) {
+                dest = item;
             }
         }
-    
-        return dest;
     }
 
-    let item = findNext(fromItem, rects, direction, true);
-    if (item) {
-        console.log('aliged');
-        return item;
-    }
-    else {
-        console.log('nearest');
-        return findNext(fromItem, rects, direction, false);
-    }
-    
+    return dest;
 }
 
 
-let currentFocused;
+function findAbove(fromItem, rects) {
+    let dest;
+    for (const item of rects) {
+        if (item.element === fromItem.element) continue;
+        const angle = findAngle(fromItem, item);
+        // item.element.innerHTML = `${angle}º`;
+        DEBUG_ITEM(item);
+
+        if (direction(angle) === 'up') {
+            DEBUG_TARGET(item);
+            if (!dest) dest = item;
+            if (distance(fromItem, item) < distance(fromItem, dest)) {
+                dest = item;
+            }
+        }
+    }
+
+    return dest;
+}
+
+function findRight(fromItem, rects) {
+    let dest;
+    for (const item of rects) {
+        if (item.element === fromItem.element) continue;
+        const angle = findAngle(fromItem, item);
+        // item.element.innerHTML = `${angle}º`;
+        DEBUG_ITEM(item);
+
+        if (direction(angle) === 'right') {
+            DEBUG_TARGET(item);
+            if (!dest) dest = item;
+            if (distance(fromItem, item) < distance(fromItem, dest)) {
+                dest = item;
+            }
+        }
+    }
+
+    return dest;
+}
+
+function findLeft(fromItem, rects) {
+    let dest;
+    for (const item of rects) {
+        if (item.element === fromItem.element) continue;
+        const angle = findAngle(fromItem, item);
+        // item.element.innerHTML = `${angle}º`;
+        DEBUG_ITEM(item);
+
+        if (direction(angle) === 'left') {
+            DEBUG_TARGET(item);
+            if (!dest) dest = item;
+            if (distance(fromItem, item) < distance(fromItem, dest)) {
+                dest = item;
+            }
+        }
+    }
+
+    return dest;
+}
+
+
+
+
+
+
+////
+
+
+let curr;
 function focus(elm) {
-    if (currentFocused) currentFocused.classList.remove('focus');
-    currentFocused = elm;
-    currentFocused.classList.add('focus');
-    // elm.scrollIntoView();
+    if (curr) {
+        curr.style.outline = '';
+        curr.style.backgroundColor = '';
+    }
+    curr = elm;
+    // curr.style.outline = '5px dashed blue';
+    curr.style.backgroundColor = '#0ff';
 }
 
+const DEBUG = true;
 
-window.addEventListener('load', () => {
-    console.log('Loaded!');
-
-    let rects = [];
-    // const elms = Array.from(document.querySelectorAll('.focusable'));
-    // for (const elm of elms) {
-    //     const rect = getRect(elm);
-    //     elm.innerHTML = `${rect.x},${rect.y}`;
-    //     rects.push(rect);
-    // }
-
-    // focus(rects[0].element);
-
-    
-    document.addEventListener('keydown', (e) => {
-
-        rects = Array.from(document.querySelectorAll('.focusable')).map(getRect);
-
-        if (!currentFocused) focus(rects[0].element);
-
-        if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            console.time('up')
-            const el = findNextElm(getRect(currentFocused), rects, 'top');
-            console.timeEnd('up')
-            console.log(el);
-            if (el) focus(el.element);
-        }
-        else if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            console.time('down')
-            const el = findNextElm(getRect(currentFocused), rects, 'bottom');
-            console.timeEnd('down')
-            console.log(el);
-            if (el) focus(el.element);
-        }
-        else if (e.key === 'ArrowLeft') {
-            e.preventDefault();
-            console.time('up')
-            const el = findNextElm(getRect(currentFocused), rects, 'left');
-            console.timeEnd('up')
-            console.log(el);
-            if (el) focus(el.element);
-        }
-        else if (e.key === 'ArrowRight') {
-            e.preventDefault();
-            console.time('up')
-            const el = findNextElm(getRect(currentFocused), rects, 'right');
-            console.timeEnd('up')
-            console.log(el);
-            if (el) focus(el.element);
-        }
-    });
-
-   
-
-});
-
-
-
-
-
-
-function random(min, max) {
-    return Math.round((Math.random() *( Math.abs(max - min))) + min);
+function DEBUG_TARGET(item) {
+    if (DEBUG) item.element.style.backgroundColor = '#ff0';
 }
-
-
-
-
+function DEBUG_ITEM(item) {
+    if (DEBUG) item.element.style.backgroundColor = '#333';
+}
