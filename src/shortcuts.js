@@ -1,6 +1,7 @@
-// import { testElement } from './keybindings';
+import { DEBUG } from './DEBUG';
+
 import delegator from './delegator';
-// import navigator from './nav';
+import { findNextItem } from './navigation';
 
 function isEnabled(elm) {
   return !(elm.disabled !== undefined ? elm.disabled : elm.hasAttribute('disabled'));
@@ -88,28 +89,24 @@ export class ComponentFocusManager {
   }
 
   _navigationHandler(event) {
-    console.log('navigationHandler', event);
-    
-    let panels = Array.from(document.querySelectorAll(this.COMPONENT_SELECTOR));
-    panels = panels.filter(el=>!el.hasAttribute('disabled'))
+    if (DEBUG) console.log('navigationHandler', event);
 
-    const currentPanel = this.getCurrentPanel();
-  
-    let i = panels.indexOf(currentPanel);
-    if (event.key === 'ArrowUp') {
-      i--;
-    }
-    if (event.key === 'ArrowDown') {
-      i++;
-    }
-  
-    if (panels[i] && panels[i] !== currentPanel) {
-      this.setCurrentPanel(panels[i]);
-      panels[i].scrollIntoView();
+    // const GROUP_ATTR = 'data-shortcut-group';
+
+    let components = Array.from(document.querySelectorAll(this.COMPONENT_SELECTOR));
+    components = components.filter(isEnabled);
+    const currentPanel = this.getActiveComponent();
+
+    let nextPanel;
+    nextPanel = findNextItem(components, currentPanel, event);
+
+    if (nextPanel && nextPanel !== currentPanel) {
       event.preventDefault();
       event.stopPropagation();
+      this.setCurrentComponent(nextPanel);
+      // nextPanel.scrollIntoView();
     }
-    
+
   }
 
 }
@@ -120,8 +117,6 @@ export class ComponentFocusManager {
 export class Shortcuts {
 
   KEYBIDING_ATTR = 'data-shortcut';
-
-  panelMan = new PanelManager();
 
   #shortcutDelegatorHandler = null;
   constructor() {
