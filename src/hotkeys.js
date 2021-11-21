@@ -1,4 +1,4 @@
-import { DEBUG } from './DEBUG';
+import { DEBUG, PREFIX } from './DEBUG';
 import delegator from './delegator';
 
 /**
@@ -24,7 +24,7 @@ export class Hotkeys {
   }
 
   _hotkeysDelegatorHandler(event) {
-    if (DEBUG) console.log("hotkeysDelegatorHandler", event);
+    if (DEBUG) console.log(PREFIX, "hotkeysDelegatorHandler", event);
     delegator(document, event, this.KEYBIDING_ATTR);
   }
 }

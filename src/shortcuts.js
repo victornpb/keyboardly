@@ -1,4 +1,4 @@
-import { DEBUG } from './DEBUG';
+import { DEBUG, PREFIX } from './DEBUG';
 
 import delegator from './delegator';
 import { findNextItem } from './navigation';
@@ -89,7 +89,7 @@ export class ComponentFocusManager {
   }
 
   _navigationHandler(event) {
-    if (DEBUG) console.log('navigationHandler', event);
+    if (DEBUG) console.log(PREFIX, 'navigationHandler', event);
 
     // const GROUP_ATTR = 'data-shortcut-group';
 
@@ -170,7 +170,7 @@ export class Shortcuts {
   }
 
   _shortcutDelegatorHandler(event) {
-    if (DEBUG) console.log("_shortcutDelegatorHandler", event);
+    if (DEBUG) console.log(PREFIX, "_shortcutDelegatorHandler", event);
     const currentPanel = this.mngr.getActiveComponent();
     delegator(currentPanel, event, this.KEYBIDING_ATTR);
   }

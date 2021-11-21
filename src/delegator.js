@@ -1,4 +1,4 @@
-import { DEBUG } from './DEBUG';
+import { DEBUG, PREFIX } from './DEBUG';
 import { testElement } from "./keybindings";
 
 const ATTR_PREVENT = "data-prevent";
@@ -23,7 +23,7 @@ export default function shortcutDelegator(
       // trigger clicks
       matchedElements.forEach((element) => {
         if (typeof dispatcherFn === "function") {
-          if (DEBUG) console.log("dispatching shortcut...", container, element, event, dispatcherFn);
+          if (DEBUG) console.log(PREFIX, "dispatching shortcut...", container, element, event, dispatcherFn);
           dispatcherFn({
             container,
             element,

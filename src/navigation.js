@@ -1,4 +1,4 @@
-import { DEBUG } from './DEBUG';
+import { DEBUG, PREFIX } from './DEBUG';
 
 export function findNextItem(elements, current, e) {
     const rects = elements.map(getRect);
@@ -174,12 +174,7 @@ function findLeft(fromItem, rects) {
 }
 
 
-
-
-
-
 ////
-
 
 let curr;
 function focus(elm) {
@@ -188,8 +183,8 @@ function focus(elm) {
         curr.style.backgroundColor = '';
     }
     curr = elm;
-    // curr.style.outline = '5px dashed blue';
-    curr.style.backgroundColor = '#0ff';
+
+    if (DEBUG) curr.style.backgroundColor = '#0ff';
 }
 
 function DEBUG_TARGET(item) {
