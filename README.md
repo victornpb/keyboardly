@@ -9,6 +9,10 @@
 
 A super lightweight fps meter, with near zero overhead
 
+## Demo
+
+https://victornpb.github.io/keyboardly/
+
 ## Installation
 
 [Yarn](https://github.com/yarnpkg/yarn)
