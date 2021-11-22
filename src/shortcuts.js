@@ -174,4 +174,36 @@ export class Shortcuts {
     const currentPanel = this.mngr.getActiveComponent();
     delegator(currentPanel, event, this.KEYBIDING_ATTR);
   }
+
+  getShortcuts() {
+    const currentPanel = this.mngr.getActiveComponent();
+    const elms = Array.from(currentPanel.querySelectorAll(`[${this.KEYBIDING_ATTR}]`)).filter(
+      (elm) => !elm.disabled
+    );
+
+    const shortcuts = elms.map((elm) => ({
+      keyBinding: elm.getAttribute(this.KEYBIDING_ATTR),
+      text: elm.innerText,
+      title: elm.title,
+      elm: elm,
+    }));
+
+    return shortcuts;
+  }
+
+  getAllShortcuts() {
+    const elms = Array.from(document.querySelectorAll(`[${this.KEYBIDING_ATTR}]`)).filter(
+      (elm) => !elm.disabled
+    );
+
+    const shortcuts = elms.map((elm) => ({
+      keyBinding: elm.getAttribute(this.KEYBIDING_ATTR),
+      text: elm.innerText,
+      title: elm.title,
+      elm: elm,
+    }));
+
+    return shortcuts;
+  }
+
 }
