@@ -40,6 +40,7 @@ export default function shortcutDelegator(
 function _defaultAction({ container, element, event }) {
   event.preventDefault();
   event.stopPropagation();
+  event.stopImmediatePropagation();
   try { element.click(); } catch (_) { }
   try { element.focus(); } catch (_) { }
 }
