@@ -1,0 +1,32 @@
+
+.Resizable{ /* Make div resizable */ }
+.Draggable{ /* Make div draggable */ }
+.Traversable{ /* Div don't obey collision */ }
+
+.Resizable, .Draggable{ cursor: auto; }
+
+.GRABBER{
+	cursor: move;
+	
+	position:absolute;
+	top: -1px;
+	left: -1px;
+	width: 12px;
+	height: 12px;
+	border: 1px outset #E9E9E9;
+	-background-color: rgba(128,128,128,0.33);
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAYAAABWKLW/AAAAHUlEQVR42j2HsQkAAACC+v+SvrRoSFBQwF2KP3UT7W4ZOac4svcAAAAASUVORK5CYII=);
+}
+.RESIZER{
+	cursor: nw-resize;
+	cursor: se-resize;
+	
+	position:absolute;
+	bottom:-1px;
+	right: -1px;
+	width: 11px;
+	height: 11px;
+	border: 1px outset silver;
+	background-color: #E9E9E9;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAANklEQVR42o3KwQ0AMAzCwIyWdzZielpv4AeykG7aqt3dapjEQ6rh32hILeR7SDXka0gt5HtIH6kGAn+/hJlCAAAAAElFTkSuQmCC);
+}
