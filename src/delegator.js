@@ -36,7 +36,6 @@ export default function shortcutDelegator(
   }
 }
 
-
 function _defaultAction({ container, element, event }) {
   event.preventDefault();
   event.stopPropagation();

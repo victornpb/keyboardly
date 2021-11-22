@@ -7,7 +7,7 @@ import delegator from './delegator';
  */
 export class Hotkeys {
   #handler = null;
-  KEYBIDING_ATTR = 'data-hotkey';
+  static KEYBIDING_ATTR = 'data-hotkey';
   constructor() {
     this.init();
   }
@@ -25,18 +25,18 @@ export class Hotkeys {
 
   _hotkeysDelegatorHandler(event) {
     if (DEBUG) console.log(PREFIX, "hotkeysDelegatorHandler", event);
-    delegator(document, event, this.KEYBIDING_ATTR);
+    delegator(document, event, Hotkeys.KEYBIDING_ATTR);
   }
 }
 
 
 export function announceHotkeys() {
-  const elms = Array.from(document.querySelectorAll(`[${KEYBIDING_ATTR}]`)).filter(
+  const elms = Array.from(document.querySelectorAll(`[${Hotkeys.KEYBIDING_ATTR}]`)).filter(
     (elm) => !elm.disabled
   );
 
   const hotkeys = elms.map((elm) => ({
-    keyBinding: elm.getAttribute(KEYBIDING_ATTR),
+    keyBinding: elm.getAttribute(Hotkeys.KEYBIDING_ATTR),
     text: elm.innerText,
     title: elm.title,
     elm: elm,
