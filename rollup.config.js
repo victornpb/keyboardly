@@ -71,8 +71,8 @@ export default [
                 browsers: '> 1%, IE 11, not op_mini all, not dead',
                 node: 8
               },
-              useBuiltIns: 'usage',
-              corejs: 3,
+              // useBuiltIns: 'usage',
+              // corejs: 3,
             }
           ]
         ],
@@ -118,8 +118,8 @@ export default [
                 browsers: '> 1%, IE 11, not op_mini all, not dead',
                 node: 8
               },
-              useBuiltIns: 'usage',
-              corejs: 3,
+              // useBuiltIns: 'usage',
+              // corejs: 3,
             }
           ]
         ],
