@@ -23,7 +23,8 @@
   "scripts": {
     "start": "rollup -c -w",
     "dev": "rollup -c -w",
-    "build": "rollup -c && cp ./src/*.css ./dist",
+    "build": "rollup -c && cp ./src/*.css ./dist ",
+    "postbuild": "npm run build --prefix demo/vue",
     "lint": "eslint src/**/*.js",
     "lint:fix": "prettier-eslint src/**/*.js --write",
     "prebuild": "rimraf dist",
