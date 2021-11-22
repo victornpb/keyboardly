@@ -1,36 +1,32 @@
 <template>
   <div>
-      <h1>Random spacial</h1>
-    <div
-      id="area"
-      style="width: 800px; height: 800px"
-    >
+    <h1>Random spacial</h1>
+    <div id="area" style="width: 800px; height: 800px">
       <template v-for="item in items">
-        <v-card
-          data-shortcut-component
-          class="Draggable Resizable blue"
-          elevation="10"
+        <div data-shortcut-component
+          class="Draggable Resizable"
           :style="{
             top: item.top,
             left: item.left,
             width: item.width,
             height: item.height,
           }"
-          :key="item.name"
+          :key="item.name" >
+        <v-card
+          class="cardd"
+          elevation="10"
         >
           {{ item.name }}
         </v-card>
+        </div>
       </template>
     </div>
   </div>
 </template>
 <script>
 import { enableDragAndResize } from "./dragresize";
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+import { createRects } from "./util";
+
 export default {
   data() {
     return {
@@ -40,21 +36,22 @@ export default {
   created() {
     console.log("created");
 
-    const areaWidth = 800;
-    const areaHeight = 800;
-    const gridSize = 32;
+    // create non overlapping rects
+    const rects = createRects(10, {
+      areaWidth: 800,
+      areaHeight: 800,
+      widthRange: [2,8],
+      heightRange: [2,8],
+      gridSize: 32,
+    });
 
-    for (let i = 0; i < 10; i++) {
-      const width = getRandomInt(2, 4) * gridSize;
-      const height = getRandomInt(2, 4) * gridSize;
-      const top = getRandomInt(0, Math.floor((areaHeight - height) / gridSize)) * gridSize;
-      const left = getRandomInt(0, Math.floor((areaWidth - width) / gridSize)) * gridSize;
+    for (let i = 0; i < rects.length; i++) {
       this.items.push({
-        name: "thing " + i,
-        top: top + "px",
-        left: left + "px",
-        width: width + "px",
-        height: height + "px",
+        name: `Thing ${i+1}`,
+        top: `${rects[i].t}px`,
+        left: `${rects[i].l}px`,
+        width: `${rects[i].w}px`,
+        height: `${rects[i].h}px`,
       });
     }
   },
@@ -68,16 +65,22 @@ export default {
 @import url(./dragresize.css);
 #area {
   position: relative;
-  width: 621px;
-  height: 450px;
-  background-color: #ffffff;
+  background-color: #ffffff; 
   border: 2px inset gray;
-  left: 39px;
-  top: 57px;
-  text-align: center;
+
 }
 
 div .Draggable {
   position: absolute;
+  padding: 5px;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.cardd{
+  width: 100%;
+  height: 100%;
+  background-color: #e91e63 !important;
+  pointer-events: none;
 }
 </style>
