@@ -7,7 +7,7 @@
 [![Coverage Status](https://img.shields.io/coveralls/victornpb/keyboardly.svg?style=flat-square)](https://coveralls.io/github/victornpb/keyboardly)
 [![NPM](https://img.shields.io/npm/dt/keyboardly.svg?style=flat-square)](https://www.npmjs.com/package/keyboardly)
 
-A super lightweight fps meter, with near zero overhead
+A library for turning web apps keyboard friendly
 
 ## Demo
 
