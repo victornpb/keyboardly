@@ -1,7 +1,7 @@
 import { DEBUG, PREFIX } from './DEBUG';
 import { testElement } from "./keybindings";
 
-const ATTR_PREVENT = "data-prevent";
+const ATTR_OVERRIDE_DEFAULT = "data-prevent";
 
 export default function shortcutDelegator(
   container,
@@ -20,6 +20,9 @@ export default function shortcutDelegator(
       .filter((elm) => testElement(elm, event, keybindingAttr));
 
     if (matchedElements.length) {
+
+      if (isFocusedOnInput && matchedElements.every(elm => !elm.hasAttribute(ATTR_OVERRIDE_DEFAULT))) return; //ignore event unless a hotkey is set to prevent
+
       // trigger clicks
       matchedElements.forEach((element) => {
         if (typeof dispatcherFn === "function") {
@@ -40,6 +43,6 @@ function _defaultAction({ container, element, event }) {
   event.preventDefault();
   event.stopPropagation();
   event.stopImmediatePropagation();
-  try { element.click(); } catch (_) { }
   try { element.focus(); } catch (_) { }
+  try { element.click(); } catch (_) { }
 }
