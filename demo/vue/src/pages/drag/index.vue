@@ -1,9 +1,19 @@
 <template>
   <div>
-    <h1>Random spacial</h1>
+    <v-app-bar>
+      <v-toolbar-title>Spacial Navigation</v-toolbar-title>
+      <v-spacer/>
+   
+      <v-btn @click="spawnRects()" data-hotkey="r">
+        <v-icon>mdi-reload</v-icon>
+        Randomize (R)
+      </v-btn>
+    </v-app-bar>
+    <v-container>
     <div id="area" style="width: 800px; height: 800px">
       <template v-for="item in items">
-        <div data-shortcut-component
+        <div
+          data-shortcut-component
           class="Draggable Resizable"
           :style="{
             top: item.top,
@@ -11,21 +21,20 @@
             width: item.width,
             height: item.height,
           }"
-          :key="item.name" >
-        <v-card
-          class="cardd"
-          elevation="10"
+          :key="item.name"
         >
-          {{ item.name }}
-        </v-card>
+          <v-card class="cardd" elevation="10">
+            {{ item.name }}
+          </v-card>
         </div>
       </template>
     </div>
+    </v-container>
   </div>
 </template>
 <script>
-import { enableDragAndResize } from "./dragresize";
-import { createRects } from "./util";
+import { enableDragAndResize } from './dragresize';
+import { createRects } from './util';
 
 export default {
   data() {
@@ -33,31 +42,37 @@ export default {
       items: [],
     };
   },
-  created() {
-    console.log("created");
-
-    // create non overlapping rects
-    const rects = createRects(10, {
-      areaWidth: 800,
-      areaHeight: 800,
-      widthRange: [2,8],
-      heightRange: [2,8],
-      gridSize: 32,
-    });
-
-    for (let i = 0; i < rects.length; i++) {
-      this.items.push({
-        name: `Thing ${i+1}`,
-        top: `${rects[i].t}px`,
-        left: `${rects[i].l}px`,
-        width: `${rects[i].w}px`,
-        height: `${rects[i].h}px`,
-      });
-    }
-  },
   mounted() {
-    console.log("mounted");
-    enableDragAndResize(this.$el, false);
+    console.log('mounted');
+    
+
+    console.log('created');
+    this.spawnRects();
+  },
+  methods: {
+    spawnRects() {
+      this.items = [];
+      // create non overlapping rects
+      const rects = createRects(10, {
+        areaWidth: 800,
+        areaHeight: 800,
+        widthRange: [2, 2],
+        heightRange: [2, 2],
+        gridSize: 32,
+      });
+
+      for (let i = 0; i < rects.length; i++) {
+        this.items.push({
+          name: `Thing ${i + 1}`,
+          top: `${rects[i].t}px`,
+          left: `${rects[i].l}px`,
+          width: `${rects[i].w}px`,
+          height: `${rects[i].h}px`,
+        });
+      }
+
+      enableDragAndResize(this.$el, false);
+    },
   },
 };
 </script>
@@ -65,9 +80,8 @@ export default {
 @import url(./dragresize.css);
 #area {
   position: relative;
-  background-color: #ffffff; 
+  background-color: #ffffff;
   border: 2px inset gray;
-
 }
 
 div .Draggable {
@@ -77,7 +91,7 @@ div .Draggable {
   z-index: 1;
 }
 
-.cardd{
+.cardd {
   width: 100%;
   height: 100%;
   background-color: #e91e63 !important;
