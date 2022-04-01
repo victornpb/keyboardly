@@ -31,7 +31,9 @@
     "prepublishOnly": "npm run build && git add * && git commit -m \"Updating build\"",
     "release": "np patch --any-branch",
     "vue": "npm run serve --prefix ./demo/vue",
-    "demo": "npm run build && concurrently \"npm run dev\" \"npm run vue\""
+    "vue-prod": "npm run serve-prod --prefix ./demo/vue",
+    "demo": "npm run build && concurrently \"npm run dev\" \"npm run vue\"",
+    "demo-prod": "npm run build && concurrently \"npm run dev\" \"npm run vue-prod\""
   },
   "files": [
     "dist"

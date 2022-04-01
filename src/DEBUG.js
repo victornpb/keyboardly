@@ -1,2 +1,2 @@
-export const DEBUG = true;
-export const PREFIX = '[Keyboardly]';
+export let DEBUG = false;
+export let PREFIX = '[Keyboardly]';

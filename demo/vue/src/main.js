@@ -3,10 +3,12 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import '@mdi/font/css/materialdesignicons.css'
 
-import kb from '../../../dist/keyboardly.esm.mjs'; // Keyboardly
+import kbdl from '../../../dist/keyboardly.esm.mjs'; // Keyboardly
 import '../../../dist/style.css';
 
-import router from './router'
+import router from './router';
+
+window.hotkeys = new kbdl.Hotkeys();
 
 Vue.config.productionTip = false
 
@@ -17,4 +19,3 @@ new Vue({
 }).$mount('#app')
 
 
-window.kb = kb;

@@ -1,8 +1,8 @@
 import { Shortcuts, ComponentFocusManager } from './shortcuts';
 import { Hotkeys, announceHotkeys } from './hotkeys';
 
-const hotkeys = new Hotkeys();
-const shortcuts = new Shortcuts();
+// const hotkeys = new Hotkeys();
+// const shortcuts = new Shortcuts();
 
 
 export default {
@@ -11,6 +11,6 @@ export default {
     Hotkeys,
     announceHotkeys,
 
-    hotkeys,
-    shortcuts,
+    // hotkeys,
+    // shortcuts,
 };
