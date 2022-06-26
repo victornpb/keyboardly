@@ -7,6 +7,9 @@
 [![Coverage Status](https://img.shields.io/coveralls/victornpb/keyboardly.svg?style=flat-square)](https://coveralls.io/github/victornpb/keyboardly)
 [![NPM](https://img.shields.io/npm/dt/keyboardly.svg?style=flat-square)](https://www.npmjs.com/package/keyboardly)
 
+![keyboardly](https://user-images.githubusercontent.com/3372598/175796486-7d460e30-33f4-4d87-9afc-0154cd5f801c.jpg)
+
+
 A library for turning web apps keyboard friendly
 
 ## Demo
