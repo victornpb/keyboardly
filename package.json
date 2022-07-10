@@ -29,17 +29,18 @@
     "test": "npm run lint",
     "lint": "eslint src/**/*.js",
     "lint:fix": "prettier-eslint src/**/*.js --write",
-    "vue": "npm run serve --prefix ./demo/vue",
-    "vue-prod": "npm run serve-prod --prefix ./demo/vue",
-    "demo": "npm run build && concurrently \"npm run dev\" \"npm run vue\"",
-    "demo-prod": "npm run build && concurrently \"npm run dev\" \"npm run vue-prod\"",
+
+    "demo:dev": "npm run build && concurrently 'npm run dev' 'npm --prefix ./demo/vue serve'",
+    "demo:build": "npm --prefix ./demo/vue run build",
 
     "docs:dev": "npm --prefix=docs run dev",
     "docs:build": "npm --prefix=docs run build",
     "docs:serve": "npm --prefix=docs run serve",
 
-    "install": "npm --prefix=docs install",
-    "ci": "npm --prefix=docs ci",
+    "ghpages": "npm run demo:build && npm run docs:build",
+
+    "install": "npm --prefix=demo/vue install && npm --prefix=docs install",
+    "ci": "npm --prefix=demo/vue ci && npm --prefix=docs ci",
     
     "prepublishOnly": "npm run build && git add * && git commit -m \"Updating build\"",
     "version": "npm run build",
