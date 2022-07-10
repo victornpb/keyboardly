@@ -24,12 +24,11 @@
     "start": "rollup -c -w",
     "dev": "rollup -c -w",
     "build": "rollup -c && cp ./src/*.css ./dist ",
+    "prebuild": "rimraf dist",
     "postbuild": "npm run build --prefix demo/vue",
+    "test": "npm run lint",
     "lint": "eslint src/**/*.js",
     "lint:fix": "prettier-eslint src/**/*.js --write",
-    "prebuild": "rimraf dist",
-    "prepublishOnly": "npm run build && git add * && git commit -m \"Updating build\"",
-    "release": "np patch --any-branch",
     "vue": "npm run serve --prefix ./demo/vue",
     "vue-prod": "npm run serve-prod --prefix ./demo/vue",
     "demo": "npm run build && concurrently \"npm run dev\" \"npm run vue\"",
@@ -38,8 +37,13 @@
     "docs:dev": "npm --prefix=docs run dev",
     "docs:build": "npm --prefix=docs run build",
     "docs:serve": "npm --prefix=docs run serve",
+
     "install": "npm --prefix=docs install",
-    "ci": "npm --prefix=docs ci"
+    "ci": "npm --prefix=docs ci",
+    
+    "prepublishOnly": "npm run build && git add * && git commit -m \"Updating build\"",
+    "version": "npm run build",
+    "release": "np --any-branch"
   },
   "files": [
     "dist"
