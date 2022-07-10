@@ -6,5 +6,5 @@ Hotkeys are a concept in Keyboardly, for any keyboard interaction that can be tr
 
 Usage examples:
  - <kbd>Space</kbd> Play / Pause on a video player
- - <kbd>CTRL</kbd>-<kbd>S</kbd> Save document on a editor
- - <kbd>CTRL</kbd>-<kbd>N</kbd>Compose new email on a webmail
+ - <kbd>CTRL</kbd>+<kbd>S</kbd> Save document on a editor
+ - <kbd>CTRL</kbd>+<kbd>N</kbd>Compose new email on a webmail
