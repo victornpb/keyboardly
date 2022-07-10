@@ -37,7 +37,7 @@
     "docs:build": "npm --prefix=docs run build",
     "docs:serve": "npm --prefix=docs run serve",
 
-    "ghpages": "npm run demo:build && npm run docs:build",
+    "ghpages": "npm run build && npm run demo:build && npm run docs:build",
 
     "install": "npm --prefix=demo/vue install && npm --prefix=docs install",
     "ci": "npm --prefix=demo/vue ci && npm --prefix=docs ci",
