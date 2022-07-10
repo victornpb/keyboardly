@@ -7,7 +7,7 @@ hero:
   tagline: A library for making your WebApp keyboard friendly. Add shortcuts, hotkeys, spacial navigation, focus handling, etc...
   actions:
     - theme: brand
-      text: Get Started
+      text: Documentation
       link: /getting-started
     - theme: alt
       text: View on GitHub
@@ -23,14 +23,17 @@ features:
   - title: Framework agnostic
     details: Works with React,Vue,Angular, VanillaJS
 ---
+
+
+
 <div class="home">
-<div class="VPDoc vp-doc">
-<div class="container">
-<div class="content">
+  <div class="VPDoc vp-doc">
+  <div class="container">
+<img src="https://user-images.githubusercontent.com/3372598/175796486-7d460e30-33f4-4d87-9afc-0154cd5f801c.jpg">
+  <div class="content_">
 
 
-
-</div>
-</div>
-</div>
+  </div>
+  </div>
+  </div>
 </div>
