@@ -12,23 +12,23 @@
 
 A library for turning web apps keyboard friendly
 
-## Demo
 
-https://victornpb.github.io/keyboardly/
+## Documentation
+
+To check out live examples and docs, visit https://victornpb.github.io/keyboardly/
 
 ## Installation
 
-[Yarn](https://github.com/yarnpkg/yarn)
+#### [Yarn](https://github.com/yarnpkg/yarn)
 
     yarn add keyboardly
 
-NPM
+#### NPM
 
     npm install keyboardly
 
+#### CDN
 If you don't use a package manager, you can [access `keyboardly` via unpkg (CDN)](https://unpkg.com/keyboardly/), download the source, or point your package manager to the url.
-
-## Usage
 
 ## Contributing
 
