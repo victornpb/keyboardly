@@ -1,0 +1,94 @@
+/* https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css */
+:root {
+  --vp-c-brand: #EE712E;
+  --vp-c-brand-light: #EE712E;
+  --vp-c-brand-lighter: #EE712E;
+  --vp-c-brand-dark: #EE712E;
+  --vp-c-brand-darker: #EE712E;
+}
+
+/* Fix home style */
+
+.home .VPDoc {
+  padding: 32px 24px 96px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .home .VPDoc {
+    padding: 48px 32px 128px;
+  }
+}
+
+@media (min-width: 960px) {
+  .home .VPDoc {
+    padding: 32px 32px 0;
+  }
+
+  .home .VPDoc:not(.has-sidebar) .container {
+    display: flex;
+    justify-content: center;
+    max-width: 992px;
+  }
+
+  .home .VPDoc:not(.has-sidebar) .aside {
+    display: block;
+  }
+
+  .home .VPDoc:not(.has-sidebar) .content {
+    max-width: 752px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .home .VPDoc .container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .home .VPDoc .aside {
+    display: block;
+  }
+}
+
+@media (min-width: 1440px) {
+  .home .VPDoc:not(.has-sidebar) .content {
+    max-width: 784px;
+  }
+
+  .home .VPDoc:not(.has-sidebar) .container {
+    max-width: 1104px;
+  }
+}
+
+.home .container {
+  margin: 0 auto;
+  width: 100%;
+}
+
+
+
+.home .content {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 960px) {
+  .home .content {
+    padding: 0 32px 128px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .home .content {
+    order: 1;
+    margin: 0;
+    min-width: 640px;
+  }
+}
+
+.home .content-container {
+  margin: 0 auto;
+  max-width: 688px;
+}

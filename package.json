@@ -33,7 +33,13 @@
     "vue": "npm run serve --prefix ./demo/vue",
     "vue-prod": "npm run serve-prod --prefix ./demo/vue",
     "demo": "npm run build && concurrently \"npm run dev\" \"npm run vue\"",
-    "demo-prod": "npm run build && concurrently \"npm run dev\" \"npm run vue-prod\""
+    "demo-prod": "npm run build && concurrently \"npm run dev\" \"npm run vue-prod\"",
+
+    "docs:dev": "npm --prefix=docs run dev",
+    "docs:build": "npm --prefix=docs run build",
+    "docs:serve": "npm --prefix=docs run serve",
+    "install": "npm --prefix=docs install",
+    "ci": "npm --prefix=docs ci"
   },
   "files": [
     "dist"
@@ -63,8 +69,6 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.1.1",
     "np": "^7.6.0",
-    "prettier-eslint": "^13.0.0",
-    "prettier-eslint-cli": "^5.0.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.60.0",
     "rollup-plugin-babel": "^4.4.0",
