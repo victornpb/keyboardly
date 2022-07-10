@@ -23,7 +23,7 @@ export default () => [
         items: [
             {
                 text: 'Vue demo',
-                link: './vue-demo/index.html'
+                link: 'https://victornpb.github.io/keyboardly/vue-demo/'
             },
         ],
     },
