@@ -19,7 +19,7 @@ export default {
 
   markdown: {
     theme: 'material-palenight',
-    lineNumbers: true,
+    lineNumbers: false,
   },
 
   themeConfig: {

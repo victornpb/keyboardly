@@ -5,7 +5,7 @@
         "start": "npm run dev",
         "dev": "vitepress dev .",
         "build": "vitepress build .",
-        "serve": "vitepress serve ."
+        "serve": "vitepress serve . --port 8081"
     },
     "devDependencies": {
         "vitepress": "^1.0.0-alpha.4",
