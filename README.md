@@ -15,7 +15,7 @@ A library for turning web apps keyboard friendly
 
 ## Documentation
 
-To check out live examples and docs, visit https://victornpb.github.io/keyboardly/
+To check out live examples and docs, visit [victornpb.github.io/keyboardly/](https://victornpb.github.io/keyboardly/)
 
 ## Installation
 
