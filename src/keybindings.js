@@ -19,22 +19,22 @@ export function testKeybinding(keyBinding, event) {
     const keys = keyBinding.split(/-|\+/);
     const k = keys[keys.length - 1];
     return (
-      event.ctrlKey === keys.includes("ctrl") &&
-      event.shiftKey === keys.includes("shift") &&
-      event.altKey === keys.includes("alt") &&
-      event.metaKey === keys.includes("meta") &&
+      event.ctrlKey === keys.includes('ctrl') &&
+      event.shiftKey === keys.includes('shift') &&
+      event.altKey === keys.includes('alt') &&
+      event.metaKey === keys.includes('meta') &&
       (event.key === k || event.code === k) //TODO: keycodes are its own nightmare
     );
   }
 
   // Mac
   if (isMacLike) { //TODO: make this a setting
-    keyBinding = keyBinding.replace(/cmd|command/g, "meta");
-    keyBinding = keyBinding.replace(/ctrl/g, "meta"); // Use Coommand instead of commoon ctrl shortcuts
+    keyBinding = keyBinding.replace(/cmd|command/g, 'meta');
+    keyBinding = keyBinding.replace(/ctrl/g, 'meta'); // Use Coommand instead of commoon ctrl shortcuts
   }
 
-  if (keyBinding.includes("|")) { // has alternative keybidings
-    const aliases = keyBinding.split("|");
+  if (keyBinding.includes('|')) { // has alternative keybidings
+    const aliases = keyBinding.split('|');
     for (const kb of aliases) {
       if (test(kb, event)) return true;
     }
