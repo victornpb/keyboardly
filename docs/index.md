@@ -8,10 +8,10 @@ hero:
   actions:
     - theme: brand
       text: Documentation
-      link: /getting-started
+      link: /guide/
     - theme: alt
       text: View on GitHub
-      link: https://github.com/vuejs/vitepress
+      link: https://github.com/victornpb/keyboardly/
 
 features:
   - title: Hotkeys
