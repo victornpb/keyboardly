@@ -1,7 +1,8 @@
 export default () => [
     {
         text: 'Getting started',
-        link: '/getting-started',
+        link: '/guide/',
+        activeMatch: '/guide'
     },
     {
         text: 'Hotkeys',

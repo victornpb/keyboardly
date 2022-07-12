@@ -1,68 +1,98 @@
-export default () => ({
-    '/guide/': [
-        {
-            text: 'Introduction',
-            collapsible: true,
-            items: [
-                { text: 'What is VitePress?', link: '/guide/what-is-vitepress' },
-                { text: 'Getting Started', link: '/guide/getting-started' },
-                { text: 'Configuration', link: '/guide/configuration' },
-                { text: 'Deploying', link: '/guide/deploying' }
-            ]
-        },
-        {
-            text: 'Writing',
-            collapsible: true,
-            items: [
-                { text: 'Markdown', link: '/guide/markdown' },
-                { text: 'Asset Handling', link: '/guide/asset-handling' },
-                { text: 'Frontmatter', link: '/guide/frontmatter' },
-                { text: 'Using Vue in Markdown', link: '/guide/using-vue' },
-                { text: 'API Reference', link: '/guide/api' }
-            ]
-        },
-        {
-            text: 'Theme',
-            collapsible: true,
-            items: [
-                { text: 'Introduction', link: '/guide/theme-introduction' },
-                { text: 'Nav', link: '/guide/theme-nav' },
-                { text: 'Sidebar', link: '/guide/theme-sidebar' },
-                { text: 'Prev Next Link', link: '/guide/theme-prev-next-link' },
-                { text: 'Edit Link', link: '/guide/theme-edit-link' },
-                { text: 'Last Updated', link: '/guide/theme-last-updated' },
-                { text: 'Layout', link: '/guide/theme-layout' },
-                { text: 'Home Page', link: '/guide/theme-home-page' },
-                { text: 'Team Page', link: '/guide/theme-team-page' },
-                { text: 'Footer', link: '/guide/theme-footer' },
-                { text: 'Search', link: '/guide/theme-search' },
-                { text: 'Carbon Ads', link: '/guide/theme-carbon-ads' }
-            ]
-        },
-        {
-            text: 'Migrations',
-            collapsible: true,
-            items: [
-                {
-                    text: 'Migration from VuePress',
-                    link: '/guide/migration-from-vuepress'
-                },
-                {
-                    text: 'Migration from VitePress 0.x',
-                    link: '/guide/migration-from-vitepress-0'
-                }
-            ]
-        }
-    ],
-    '/config/': [
-        {
-          text: 'Config',
-          items: [
-            { text: 'Introduction', link: '/config/introduction' },
-            { text: 'App Configs', link: '/config/app-configs' },
-            { text: 'Theme Configs', link: '/config/theme-configs' },
-            { text: 'Frontmatter Configs', link: '/config/frontmatter-configs' }
-          ]
-        }
-    ],
+import fs from 'fs';
+import path from 'path';
+import fg from 'fast-glob';
+
+const options = {
+    followSymbolicLinks: false,
+    markDirectories: true,
+    deep: 2,
+    dot: false,
+    ignore: ['node_modules', 'public'],
+};
+
+const menu = fg.sync('./**/*.md', options);
+console.log(menu);
+
+const items = menu.map(file => {
+    const filename = path.basename(file, '.md');
+    const dirname = path.dirname(file);
+    return {
+        index: extractIndex(filename),
+        name: filenameToTitle(filename),
+        group: filenameToTitle(dirname),
+        dirname: dirname,
+        path: file,
+    };
 });
+
+console.log(items);
+
+function extractIndex(filename) {
+    const m =filename.match(/^(\d+)\./);
+    return m ? parseInt(m[1]) : 0;
+}
+
+function filenameToTitle(filename) {
+    return filename.replace(/\.md$/, '')
+        .replace(/-|_/g, ' ') // convert - or _ to spaces
+        .replace(/^(\d+)\./, '') // remove leading number
+        .replace(/\w\S*/g, function (txt) { // capitalize each word
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
+const nav = {};
+for (const item of items) {
+    const match = `/${item.dirname}/`;
+    if (!nav[match]) {
+        nav[match] = [{
+            text: filenameToTitle(item.group),
+            collapsible: true,
+            items: [],
+        }];
+    }
+    nav[match][0].items.push({
+        text: item.name,
+        link: `/${item.path}`,
+    });
+}
+/* A function that returns an object. */
+
+console.log(nav);
+
+export default () => nav;
+
+// export default () => ({
+//     '/guide/': [
+//         {
+//             text: 'Getting started',
+//             collapsible: true,
+//             items: [
+//                 { text: 'Introduction', link: '/guide/introduction' },
+//                 { text: 'Installation', link: '/guide/install' },
+//                 { text: 'Concepts', link: '/guide/concepts' },
+
+//             ]
+//         }
+//     ],
+//     '/shortcuts/': [
+//         {
+//             text: 'Introduction',
+//             collapsible: true,
+//             items: [
+//                 { text: 'What are Shortcuts?', link: '/shortcuts' },
+//                 { text: 'Navigation', link: '/shortcuts/navigation' },
+
+//             ]
+//         },
+//         {
+//             text: 'Introduction',
+//             collapsible: true,
+//             items: [
+//                 { text: 'What are Shortcuts?', link: '/shortcuts' },
+//                 { text: 'Navigation', link: '/shortcuts/navigation' },
+
+//             ]
+//         },
+//     ]
+// });

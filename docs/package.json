@@ -8,6 +8,8 @@
         "serve": "vitepress serve . --port 8081"
     },
     "devDependencies": {
+        "fast-glob": "^3.2.11",
+        "minimatch": "^5.1.0",
         "vitepress": "^1.0.0-alpha.4",
         "vue": "^3.2.37"
     }
