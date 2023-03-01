@@ -36,6 +36,7 @@
     "ghpages": "npm run build && npm run demo:build && npm run docs:build",
     "install": "npm --prefix=demo/vue install && npm --prefix=docs install",
     "ci": "npm --prefix=demo/vue ci && npm --prefix=docs ci",
+    "test-server": "http-server -p 3000",
     "version": "npm run build",
     "release": "np"
   },
@@ -51,7 +52,6 @@
     "macro"
   ],
   "sideEffects": false,
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/plugin-proposal-class-properties": "^7.16.0",
@@ -60,10 +60,12 @@
     "@babel/plugin-transform-runtime": "^7.16.4",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.16.4",
+    "@playwright/test": "^1.31.1",
     "ansi-regex": ">=5.0.1",
     "babel-plugin-array-includes": "^2.0.3",
     "concurrently": "^6.4.0",
     "eslint": "^8.3.0",
+    "http-server": "^14.1.1",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.1",
     "np": "^7.6.3",

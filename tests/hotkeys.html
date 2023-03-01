@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../dist/keyboardly.css" />
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        main {
+            padding: 4em;
+            padding-bottom: 20vh;
+        }
+        
+        button,
+        input {
+            display: block;
+            margin: 0.5em;
+        }
+        
+        #log {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 20vh;
+            
+            padding: 1em;
+            margin: 0;
+            border: 1px solid #666;
+            background-color: #ccc;
+            overflow: auto;
+        }
+        </style>
+    <script>
+        let i = 0;
+        function action(e) {
+            const log = document.getElementById('log');
+            log.insertAdjacentHTML('beforeend', `<div>${++i}\tPressed "${e.innerText}"</div>`);
+            log.lastChild.scrollIntoView();
+        }
+        
+        </script>
+</head>
+
+<body>
+    <main>
+        <div>
+            <h3>Simple</h3>
+            <button type="button" onclick="action(this)" data-hotkey="a">A</button>
+            <button type="button" onclick="action(this)" data-hotkey="b">B</button>
+            <button type="button" onclick="action(this)" data-hotkey="b">B</button>
+            
+            <h3>Simple | Simple</h3>
+            <button type="button" onclick="action(this)" data-hotkey="d|e">D or E</button>
+            
+            <h3>Modifier</h3>
+            <button type="button" onclick="action(this)" data-hotkey="ctrl-f">Ctrl+F</button>
+            <button type="button" onclick="action(this)" data-hotkey="shift-f">Shift+F</button>
+            <button type="button" onclick="action(this)" data-hotkey="alt-f">Alt+F</button>
+            
+            <h3>MoreModifiers</h3>
+            <button type="button" onclick="action(this)" data-hotkey="ctrl-shift-f">Ctrl+Shift+F</button>
+            <button type="button" onclick="action(this)" data-hotkey="ctrl-alt-f">Ctrl+Alt+F</button>
+
+            <button type="button" onclick="action(this)" data-hotkey="alt-shift-f">Alt+Shift+F</button>
+
+            <button type="button" onclick="action(this)" data-hotkey="alt-f">Alt+F</button>
+            <!-- <button type="button" onclick="action(this)" data-hotkey="meta-f">META-F</button> -->
+            
+            <h3>Modifier | Simple</h3>
+            <button type="button" onclick="action(this)" data-hotkey="ctrl-g|h">Ctrl+G or H</button>
+            
+            <h3>Modifier | Modifier</h3>
+            <button type="button" onclick="action(this)" data-hotkey="ctrl-i|ctrl-j">Ctrl+I or Ctrl+J</button>
+            
+            <h3>Disabled</h3>
+            <button type="button" onclick="action(this)" data-hotkey="k" disabled>k</button>
+        </div>
+        
+        <div>
+            <input type="text">
+            <input type="number">
+            <input type="search">
+            <input type="tel">
+            <input type="range">
+            <input type="date">
+            <textarea></textarea>
+        </div>
+        
+    </main>
+    <pre id="log"></pre>
+</body>
+
+<script src="../dist/keyboardly.js"></script>
+<script>
+    kbd = new Keyboardly.Hotkeys();
+</script>
+</html>

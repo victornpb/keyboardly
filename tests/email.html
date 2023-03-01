@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Email Inbox</title>
+  <style>
+    /* Styles for the page header */
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+    }
+    header h1 {
+      margin: 0;
+    }
+    header input {
+        float: right;
+    }
+    
+    /* Styles for the email list */
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      border-bottom: 1px solid #ccc;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    li:last-child {
+      border-bottom: none;
+    }
+    li .sender {
+      font-weight: bold;
+    }
+    li .subject {
+      margin-left: 10px;
+    }
+    li .date {
+      font-size: 12px;
+      color: #888;
+    }
+    
+    /* Styles for the email preview */
+    .preview {
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    .preview h2 {
+      margin-top: 0;
+    }
+    .preview p {
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Email Inbox</h1>
+    <div>
+        <button type="button" data-hotkey="c">Compose</button>
+        <button type="button" data-hotkey="l">Log out</button>
+      
+        <input type="text" placeholder="Search" >
+    </div>
+  </header>
+  
+  <main>
+    <ul>
+      <li data-shortcut-component>
+        <div class="sender">John Doe</div>
+        <div class="subject">Hello World</div>
+        <div class="date">March 1, 2023</div>
+        <div>
+            <input type="text">
+        </div>
+        <div>
+            <button type="button" data-shortcut="r">Read</button>
+            <button type="button" data-shortcut="Backspace|Delete">Delete</button>
+            <button type="button" data-shortcut="m">Mark as read</button>
+        </div>
+      </li>
+      <li data-shortcut-component>
+        <div class="sender">Jane Smith</div>
+        <div class="subject">Regarding Your Request</div>
+        <div class="date">February 28, 2023</div>
+        <div>
+            <input type="text">
+        </div>
+        <div>
+            <button type="button" data-shortcut="r">Read</button>
+            <button type="button" data-shortcut="Backspace|Delete">Delete</button>
+            <button type="button" data-shortcut="m">Mark as read</button>
+        </div>
+      </li>
+      <li data-shortcut-component>
+        <div class="sender">Bob Johnson</div>
+        <div class="subject">Meeting Reminder</div>
+        <div class="date">February 27, 2023</div>
+        <div>
+            <input type="text">
+        </div>
+        <div>
+            <button type="button" data-shortcut="r">Read</button>
+            <button type="button" data-shortcut="Backspace|Delete">Delete</button>
+            <button type="button" data-shortcut="m">Mark as read</button>
+        </div>
+      </li>
+    </ul>
+    
+    <div class="preview">
+      <h2>Hello World</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet elit vel justo blandit elementum. Proin dignissim quam vel faucibus euismod. Nullam vel enim non nisl blandit rhoncus. Fusce suscipit massa vel quam rutrum eleifend. Sed tristique turpis vel mi molestie egestas.</p>
+      <textarea>
+        Compose
+      </textarea>
+
+      <div contenteditable>
+        Rich Text
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>
