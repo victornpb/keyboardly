@@ -99,11 +99,8 @@ export class ComponentFocusManager {
     let nextPanel;
     const currentPanel = this.getActiveComponent();
 
-    if (currentPanel) {
+    // TODO: handle which key moves in which direction should be handled outside the findNextItem function
       nextPanel = findNextItem(components, currentPanel, event);
-    } else {
-      nextPanel = components[0];
-    }
 
     if (nextPanel && nextPanel !== currentPanel) {
       event.preventDefault();
