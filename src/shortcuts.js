@@ -7,6 +7,11 @@ function isEnabled(elm) {
   return !(elm.disabled !== undefined ? elm.disabled : elm.hasAttribute('disabled'));
 }
 
+function isFocusedOnInput() {
+  const elm = document.activeElement;
+  return elm && (elm.nodeName === 'INPUT' || elm.nodeName === 'TEXTAREA');
+}
+
 export class ComponentFocusManager {
   ACTIVE_CLASS = "focus";
   COMPONENT_SELECTOR = "[data-shortcut-component]";
@@ -91,7 +96,7 @@ export class ComponentFocusManager {
   _navigationHandler(event) {
     if (DEBUG) console.log(PREFIX, 'navigationHandler', event);
 
-    // const GROUP_ATTR = 'data-shortcut-group';
+    if (isFocusedOnInput()) return; // do not navigate if focused on input
 
     let components = Array.from(document.querySelectorAll(this.COMPONENT_SELECTOR));
     components = components.filter(isEnabled);
