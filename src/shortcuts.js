@@ -41,11 +41,13 @@ export class ComponentFocusManager {
 
   /** Focus a element when clicked */
   _focusPanelOnClickHandler(event) {
+    if (DEBUG) console.log(PREFIX, 'focusPanelOnClickHandler', event);
     const clickedElm = event.target;
     this.focusComponentOfTargetElm(clickedElm);
   }
   /** Watch for focus changing via Tab */
-  _tabFocusFollowerHandler() {
+  _tabFocusFollowerHandler(event) {
+    if (DEBUG) console.log(PREFIX, 'tabFocusFollowerHandler', event);
     const focusedElm = document.activeElement;
     this.focusComponentOfTargetElm(focusedElm);
   }
@@ -105,7 +107,7 @@ export class ComponentFocusManager {
     const currentPanel = this.getActiveComponent();
 
     // TODO: handle which key moves in which direction should be handled outside the findNextItem function
-      nextPanel = findNextItem(components, currentPanel, event);
+    nextPanel = findNextItem(components, currentPanel, event);
 
     if (nextPanel && nextPanel !== currentPanel) {
       event.preventDefault();
@@ -114,27 +116,6 @@ export class ComponentFocusManager {
       // nextPanel.scrollIntoView();
     }
 
-    // _domNavigation() {
-    //   let panels = Array.from(document.querySelectorAll(this.COMPONENT_SELECTOR));
-    //   panels = panels.filter(el=>!el.hasAttribute('disabled'))
-
-    //   const currentPanel = this.getCurrentPanel();
-
-    //   let i = panels.indexOf(currentPanel);
-    //   if (event.key === 'ArrowUp') {
-    //     i--;
-    //   }
-    //   if (event.key === 'ArrowDown') {
-    //     i++;
-    //   }
-
-    //   if (panels[i] && panels[i] !== currentPanel) {
-    //     event.preventDefault();
-    //     event.stopPropagation();
-    //     this.setCurrentComponent(nextPanel);
-    //     // nextPanel.scrollIntoView();
-    //   }
-    // }
   }
 
 }
