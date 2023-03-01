@@ -36,7 +36,6 @@
     "ghpages": "npm run build && npm run demo:build && npm run docs:build",
     "install": "npm --prefix=demo/vue install && npm --prefix=docs install",
     "ci": "npm --prefix=demo/vue ci && npm --prefix=docs ci",
-    "prepublishOnly": "npm run build && git add * && git commit -m \"Updating build\"",
     "version": "npm run build",
     "release": "np"
   },
