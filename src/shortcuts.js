@@ -25,12 +25,12 @@ export class ComponentFocusManager {
   }
   init() {
     document.addEventListener("click", this.#focusPanelOnClickHandler);
-    document.addEventListener("keyup", this.#tabFocusFollowerHandler);
+    document.addEventListener("focusin", this.#tabFocusFollowerHandler);
     document.addEventListener("keydown", this.#navigationHandler);
   }
   destroy() {
     document.removeEventListener('click', this.#focusPanelOnClickHandler);
-    document.removeEventListener('keyup', this.#tabFocusFollowerHandler);
+    document.removeEventListener('focusin', this.#tabFocusFollowerHandler);
     document.removeEventListener('keydown', this.#navigationHandler);
   }
 
