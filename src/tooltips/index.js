@@ -41,7 +41,7 @@ function createTooltipElm(doc = document) {
 }
 
 function positionTooltip(tooltipElement, targetElement, margin = 0, doc) {
-  
+
   // The tooltip is already in the document, but not visible.
   // It needs to be be a block, and be inside the screen for it to have dimensions.
   // Since we reuse tooltips, if the content changes, and it overflows off-screen,

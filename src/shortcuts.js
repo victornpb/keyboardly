@@ -7,6 +7,11 @@ function isEnabled(elm) {
   return !(elm.disabled !== undefined ? elm.disabled : elm.hasAttribute('disabled'));
 }
 
+function isFocusedOnInput() {
+  const elm = document.activeElement;
+  return elm && (elm.nodeName === 'INPUT' || elm.nodeName === 'TEXTAREA');
+}
+
 export class ComponentFocusManager {
   ACTIVE_CLASS = "focus";
   COMPONENT_SELECTOR = "[data-shortcut-component]";
@@ -25,22 +30,24 @@ export class ComponentFocusManager {
   }
   init() {
     document.addEventListener("click", this.#focusPanelOnClickHandler);
-    document.addEventListener("keyup", this.#tabFocusFollowerHandler);
+    document.addEventListener("focusin", this.#tabFocusFollowerHandler);
     document.addEventListener("keydown", this.#navigationHandler);
   }
   destroy() {
     document.removeEventListener('click', this.#focusPanelOnClickHandler);
-    document.removeEventListener('keyup', this.#tabFocusFollowerHandler);
+    document.removeEventListener('focusin', this.#tabFocusFollowerHandler);
     document.removeEventListener('keydown', this.#navigationHandler);
   }
 
   /** Focus a element when clicked */
   _focusPanelOnClickHandler(event) {
+    if (DEBUG) console.log(PREFIX, 'focusPanelOnClickHandler', event);
     const clickedElm = event.target;
     this.focusComponentOfTargetElm(clickedElm);
   }
   /** Watch for focus changing via Tab */
-  _tabFocusFollowerHandler() {
+  _tabFocusFollowerHandler(event) {
+    if (DEBUG) console.log(PREFIX, 'tabFocusFollowerHandler', event);
     const focusedElm = document.activeElement;
     this.focusComponentOfTargetElm(focusedElm);
   }
@@ -91,7 +98,7 @@ export class ComponentFocusManager {
   _navigationHandler(event) {
     if (DEBUG) console.log(PREFIX, 'navigationHandler', event);
 
-    // const GROUP_ATTR = 'data-shortcut-group';
+    if (isFocusedOnInput()) return; // do not navigate if focused on input
 
     let components = Array.from(document.querySelectorAll(this.COMPONENT_SELECTOR));
     components = components.filter(isEnabled);
@@ -99,11 +106,8 @@ export class ComponentFocusManager {
     let nextPanel;
     const currentPanel = this.getActiveComponent();
 
-    if (currentPanel) {
-      nextPanel = findNextItem(components, currentPanel, event);
-    } else {
-      nextPanel = components[0];
-    }
+    // TODO: handle which key moves in which direction should be handled outside the findNextItem function
+    nextPanel = findNextItem(components, currentPanel, event);
 
     if (nextPanel && nextPanel !== currentPanel) {
       event.preventDefault();
@@ -112,27 +116,6 @@ export class ComponentFocusManager {
       // nextPanel.scrollIntoView();
     }
 
-    // _domNavigation() {
-    //   let panels = Array.from(document.querySelectorAll(this.COMPONENT_SELECTOR));
-    //   panels = panels.filter(el=>!el.hasAttribute('disabled'))
-
-    //   const currentPanel = this.getCurrentPanel();
-
-    //   let i = panels.indexOf(currentPanel);
-    //   if (event.key === 'ArrowUp') {
-    //     i--;
-    //   }
-    //   if (event.key === 'ArrowDown') {
-    //     i++;
-    //   }
-
-    //   if (panels[i] && panels[i] !== currentPanel) {
-    //     event.preventDefault();
-    //     event.stopPropagation();
-    //     this.setCurrentComponent(nextPanel);
-    //     // nextPanel.scrollIntoView();
-    //   }
-    // }
   }
 
 }

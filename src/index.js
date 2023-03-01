@@ -1,3 +1,4 @@
+import { setDebug } from './DEBUG';
 import { Shortcuts, ComponentFocusManager } from './shortcuts';
 import { Hotkeys, announceHotkeys } from './hotkeys';
 import announce from './announce';
@@ -12,6 +13,7 @@ export default {
   Hotkeys,
   announceHotkeys,
   announce,
+  setDebug,
 
   // hotkeys,
   // shortcuts,
