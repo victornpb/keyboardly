@@ -2,7 +2,7 @@ import { DEBUG, PREFIX } from './DEBUG';
 
 export function findNextItem(elements, current, e) {
   const rects = elements.map(getRect);
-  const focused = getRect(current);
+  const focused = getRect(current || elements[0]);
 
   const dryRun = e.shiftKey;
 
