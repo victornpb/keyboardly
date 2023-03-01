@@ -1,5 +1,7 @@
 <template>
   <div>
+
+    <v-text-field label="Search"/>
     <v-data-table
       :headers="headerArray"
       :items="itemsArray"
@@ -22,13 +24,14 @@
             data-shortcut-component
           >
             <td>{{ item.name }}</td>
-            <td><v-btn data-shortcut="Enter">OK</v-btn></td>
-            <td>CONTENT</td>
-            <td>CONTENT</td>
+            <td><v-btn data-shortcut="Enter">Enter</v-btn></td>
+            <td><input></td>
+            <td><v-text-field label="text"/></td>
             <td>
               <v-btn icon data-shortcut="Delete|Backspace"><v-icon>mdi-delete</v-icon></v-btn>
             </td>
             <td>
+              (jkl)
               <v-btn icon data-shortcut="j"><v-icon>mdi-skip-previous</v-icon></v-btn>
               <v-btn icon data-shortcut="k"><v-icon>mdi-play</v-icon></v-btn>
               <v-btn icon data-shortcut="l"><v-icon>mdi-skip-next</v-icon></v-btn>
