@@ -28,6 +28,7 @@ export default [
         file: packageJson.module.replace('.js', '.mjs'),
         format: 'esm',
         sourcemap: false,
+        exports: 'default',
       },
     ],
     plugins: [
@@ -50,12 +51,14 @@ export default [
       {
         file: packageJson.main,
         format: 'cjs',
-        sourcemap
+        sourcemap,
+        exports: 'default',
       },
       {
         file: packageJson.module,
         format: 'esm',
-        sourcemap
+        sourcemap,
+        exports: 'default',
       },
     ],
     plugins: [
@@ -102,7 +105,8 @@ export default [
         name: packageJson.globalVar,
         file: packageJson.unpkg,
         format: 'umd',
-        sourcemap
+        sourcemap,
+        exports: 'default',
       }
     ],
     plugins: [
