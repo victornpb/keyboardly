@@ -28,7 +28,7 @@
     "postbuild": "npm run build --prefix demo/vue",
     "test": "npm run lint",
     "lint": "eslint src/**/*.js",
-    "lint:fix": "prettier-eslint src/**/*.js --write",
+    "lint:fix": "eslint src/**/*.js --fix",
 
     "demo:dev": "npm run build && concurrently 'npm run dev' 'npm --prefix ./demo/vue serve'",
     "demo:build": "npm --prefix ./demo/vue run build",
